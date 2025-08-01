@@ -1,17 +1,18 @@
-//
-//  MobileAppBallonApp.swift
-//  MobileAppBallon
-//
-//  Created by Артём Коротков on 29.07.2025.
-//
-
 import SwiftUI
 
 @main
 struct MobileAppBallonApp: App {
+    let userDefaults = UserDefaultsManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if userDefaults.checkLogin() {
+                MainView()
+            } else {
+                RegistationView()
+                    .onAppear() {
+                        userDefaults.quitQuest()
+                    }
+            }
         }
     }
 }
